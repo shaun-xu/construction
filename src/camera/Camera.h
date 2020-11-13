@@ -16,7 +16,7 @@ struct CameraFrame {
     {
         if(memory !=NULL)
         {
-            free(memory);
+            //free(memory);
         }
     }
 };

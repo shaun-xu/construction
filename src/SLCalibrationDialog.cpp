@@ -80,7 +80,8 @@ SLCalibrationDialog::SLCalibrationDialog(SLStudio *parent) : QDialog(parent), ui
     }
 
     // Create calibrator
-    calibrator = new CalibratorLocHom(screenCols, screenRows);
+    //calibrator = new CalibratorLocHom(screenCols, screenRows);
+    calibrator = new CalibratorRBF(screenCols, screenRows);
 
     connect(calibrator, SIGNAL(newSequenceResult(cv::Mat, unsigned int, bool)), this, SLOT(onNewSequenceResult(cv::Mat,uint,bool)));
 

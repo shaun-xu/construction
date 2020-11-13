@@ -329,12 +329,26 @@ CameraFrame  CamerHikang::getFrame()
             cv::Mat frameCV(int(stImageInfo.nHeight), int(stImageInfo.nWidth), type, (void *)pDataForRGB);
             cv::Mat frameNew;
             cv::cvtColor(frameCV,frameNew, cv::COLOR_BGR2GRAY);
-            memcpy(pDataForRGB, frameNew.data,stImageInfo.nWidth*stImageInfo.nHeight);
+//            memcpy(pDataForRGB, frameNew.data,stImageInfo.nWidth*stImageInfo.nHeight);
 
-            frame.memory = pDataForRGB;
-            frame.width = stImageInfo.nWidth;
-            frame.height = stImageInfo.nHeight;
-            frame.sizeBytes = stImageInfo.nWidth * stImageInfo.nHeight *  4 + 2048;
+            frameNew.convertTo(currentBuffer, CV_8U);
+            free(pDataForRGB);
+
+         //cv::imwrite("frameCV.png", frameCV);
+
+            // return as CameraFrame struct
+//            CameraFrame frame;
+//            frame.height = currentBuffer.rows;
+//            frame.width = currentBuffer.cols;
+//            frame.memory = currentBuffer.data;
+//            frame.timeStamp = 0;
+//            frame.sizeBytes = currentBuffer.rows*currentBuffer.cols;
+
+            frame.height = currentBuffer.rows;
+            frame.width = currentBuffer.cols;
+            frame.memory = currentBuffer.data;
+            frame.timeStamp = 0;
+            frame.sizeBytes = currentBuffer.rows*currentBuffer.cols;
         }
         else{
             std::cout<<"No data[%x]"<< nRet<<std::endl;

@@ -3,7 +3,7 @@
 #include "MvCameraControl.h"
 #include "Camera.h"
 #include <vector>
-
+#include "opencv/cv.h"
 
 class CamerHikang : public Camera
 {
@@ -29,6 +29,9 @@ private:
     int     m_nWidth;
     int     m_nHeight;
     bool  capturing;
+
+    cv::Mat currentBuffer;
+
 };
 
 #endif // CAMERHIKANG_H

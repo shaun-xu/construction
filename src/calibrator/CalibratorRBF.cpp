@@ -63,12 +63,19 @@ CalibrationData CalibratorRBF::calibrate(){
     // Find calibration point coordinates for camera and projector
     vector< vector<cv::Point2f> > qc, qp;
     vector< vector<cv::Point3f> > Q;
+
+    vector<cv::Mat> frames = frameSeqs[0];
+
     for(unsigned int i=0; i<nFrameSeq; i++){
         vector<cv::Point2f> qci;
         // Extract checker corners
-        bool success = cv::findChessboardCorners(shading[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
+        bool success = cv::findChessboardCorners(frames[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
         if(!success)
+        {
             std::cout << "Calibrator: could not extract chess board corners on frame seqence " << i << std::endl << std::flush;
+            cv::imwrite(QString("shading-frames[%1].png").arg(i).toStdString(), shading[i]);
+
+        }
         else
             // Refine corner locations
             cv::cornerSubPix(shading[i], qci, cv::Size(5, 5), cv::Size(-1, -1),cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.001));

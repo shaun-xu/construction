@@ -31,6 +31,7 @@
 #include "SLCameraVirtual.h"
 #include "SLPointCloudWidget.h"
 #include "camerhikang.h"
+#include "ProjectorQT.h"
 
 void SLScanWorker::setup(){
 
@@ -60,17 +61,18 @@ void SLScanWorker::setup(){
     camera->setCameraSettings(camSettings);
 
     // Initialize projector
-    int screenNum = settings.value("projector/screenNumber", -1).toInt();
-    if(screenNum >= 0)
-        projector = new ProjectorOpenGL(screenNum);
-    else if(screenNum == -1)
-        projector = new SLProjectorVirtual(screenNum);
-    else if(screenNum == -2)
-        projector = new ProjectorLC3000(0);
-    else if(screenNum == -3)
-        projector = new ProjectorLC4500(0);
-    else
-        std::cerr << "SLScanWorker: invalid projector id " << screenNum << std::endl;
+    projector= new ProjectorQT(0);
+//    int screenNum = settings.value("projector/screenNumber", -1).toInt();
+//    if(screenNum >= 0)
+//        projector = new ProjectorOpenGL(screenNum);
+//    else if(screenNum == -1)
+//        projector = new SLProjectorVirtual(screenNum);
+//    else if(screenNum == -2)
+//        projector = new ProjectorLC3000(0);
+//    else if(screenNum == -3)
+//        projector = new ProjectorLC4500(0);
+//    else
+//        std::cerr << "SLScanWorker: invalid projector id " << screenNum << std::endl;
 
     // Initialize encoder
     bool diamondPattern = settings.value("projector/diamondPattern", false).toBool();
@@ -145,7 +147,7 @@ void SLScanWorker::setup(){
 
         projector->setPattern(i, pattern.ptr(), pattern.cols, pattern.rows);
 
-//        cv::imwrite(cv::format("pat_%d.bmp", i), pattern);
+        cv::imwrite(cv::format("pat_%d.bmp", i), pattern);
     }
 
 //    // Upload patterns to projector/GPU in compact resolution (texture)
@@ -199,11 +201,14 @@ void SLScanWorker::doWork(){
 
         time.restart();
 
+
+
         // Acquire patterns
         for(unsigned int i=0; i<N; i++){
 
             // Project coded pattern
             projector->displayPattern(i);
+            QCoreApplication::processEvents();
 
             if(triggerMode == triggerModeSoftware){
                 // Wait one frame period to rotate projector frame buffer
@@ -228,14 +233,17 @@ void SLScanWorker::doWork(){
                 i = 0;
              }
 
+
             // Create 8 bit OpenCV matrix
             cv::Mat frameCV(frame.height, frame.width, CV_8U, frame.memory);
-            frameCV = frameCV.clone();
+
+            QString filename = QString("scan_frameSeq_%1_%1.bmp").arg(k,i);
+            cv::imwrite(filename.toStdString(), frameCV);
 
             if(triggerMode == triggerModeHardware)
-                frameSeq[(i+N-shift)%N] = frameCV;
+                frameSeq[(i+N-shift)%N] = frameCV.clone();
             else
-                frameSeq[i] = frameCV;
+                frameSeq[i] =  frameCV.clone();
 
         }
 
@@ -252,13 +260,7 @@ void SLScanWorker::doWork(){
         }
 
         // Write frames to disk if desired
-        if(writeToDisk){
-                for(unsigned int i=0; i<frameSeq.size(); i++){
-                    QString filename = QString("frameSeq_%1.bmp").arg(i, 2, 10, QChar('0'));
-                    cv::imwrite(filename.toStdString(), frameSeq[i]);
 
-                }
-        }
 
         // Pass frame sequence to decoder
         emit newFrameSeq(frameSeq);

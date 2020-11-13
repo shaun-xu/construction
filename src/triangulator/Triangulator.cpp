@@ -72,7 +72,6 @@ Triangulator::Triangulator(CalibrationData _calibration) : calibration(_calibrat
 }
 
 void Triangulator::triangulate(cv::Mat &up, cv::Mat &vp, cv::Mat &mask, cv::Mat &shading, cv::Mat &pointCloud){
-
     // Undistort up, mask and shading
     if(!up.empty()){
         cv::Mat upUndistort;

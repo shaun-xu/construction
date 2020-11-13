@@ -64,6 +64,9 @@ CalibrationData CalibratorLocHom::calibrate(){
     // Find calibration point coordinates for camera and projector
     vector< vector<cv::Point2f> > qc, qp;
     vector< vector<cv::Point3f> > Q;
+    vector<cv::Mat> frames = frameSeqs[0];
+
+
     for(unsigned int i=0; i<nFrameSeq; i++){
         //std::cout << i << " 1" << std::endl;
         vector<cv::Point2f> qci;
@@ -71,11 +74,13 @@ CalibrationData CalibratorLocHom::calibrate(){
         //cv::GaussianBlur(shading[i], shading[i], cv::Size(5,5), 2, 2);
         // Extract checker corners
         //std::cout << i << " findChessboardCorners" << std::endl;
-        bool success = cv::findChessboardCorners(shading[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
+        bool success = cv::findChessboardCorners(frames[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
+
+//        bool success = cv::findChessboardCorners(shading[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
         if(!success)
         {
             std::cout << "Calibrator: could not extract chess board corners on frame seqence " << i << std::endl << std::flush;
-          //  cv::imwrite(QString("frames[%1].png").arg(f).toStdString(), frames[f]);
+           cv::imwrite(QString("chess-frames[%1].png").arg(i).toStdString(), frames[i]);
 
         }
         else{

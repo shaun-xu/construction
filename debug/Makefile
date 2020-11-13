@@ -98,6 +98,8 @@ SOURCES       = ../src/main.cpp \
 		../src/tracker/TrackerPCL.cpp \
 		../src/tracker/PoseFilter.cpp \
 		../src/camera/camerhikang.cpp \
+		../src/projector/ProjectorQT.cpp \
+		../src/projector/ShowImage.cpp \
 		../src/projector/OpenGLContext.Unix.cpp \
 		../src/projector/ProjectorLC3000.cpp \
 		../src/projector/LC3000API/lcr_cmd.cpp \
@@ -124,7 +126,8 @@ SOURCES       = ../src/main.cpp \
 		moc_Calibrator.cpp \
 		moc_CalibratorLocHom.cpp \
 		moc_CalibratorRBF.cpp \
-		moc_PoseFilter.cpp
+		moc_PoseFilter.cpp \
+		moc_ProjectorQT.cpp
 OBJECTS       = main.o \
 		SLStudio.o \
 		SLScanWorker.o \
@@ -173,6 +176,8 @@ OBJECTS       = main.o \
 		TrackerPCL.o \
 		PoseFilter.o \
 		camerhikang.o \
+		ProjectorQT.o \
+		ShowImage.o \
 		OpenGLContext.Unix.o \
 		ProjectorLC3000.o \
 		lcr_cmd.o \
@@ -200,7 +205,8 @@ OBJECTS       = main.o \
 		moc_Calibrator.o \
 		moc_CalibratorLocHom.o \
 		moc_CalibratorRBF.o \
-		moc_PoseFilter.o
+		moc_PoseFilter.o \
+		moc_ProjectorQT.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -347,6 +353,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../src/tracker/PoseFilter.h \
 		../src/cvtools.h \
 		../src/camera/camerhikang.h \
+		../src/projector/ProjectorQT.h \
+		../src/projector/ShowImage.h \
 		../src/projector/LC3000API/lcr_cmd.h ../src/main.cpp \
 		../src/SLStudio.cpp \
 		../src/SLScanWorker.cpp \
@@ -395,6 +403,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../src/tracker/TrackerPCL.cpp \
 		../src/tracker/PoseFilter.cpp \
 		../src/camera/camerhikang.cpp \
+		../src/projector/ProjectorQT.cpp \
+		../src/projector/ShowImage.cpp \
 		../src/projector/OpenGLContext.Unix.cpp \
 		../src/projector/ProjectorLC3000.cpp \
 		../src/projector/LC3000API/lcr_cmd.cpp \
@@ -626,8 +636,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/SLResources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/SLStudio.h ../src/SLVideoWidget.h ../src/SLPreferenceDialog.h ../src/SLCalibrationDialog.h ../src/SLCameraVirtual.h ../src/SLProjectorVirtual.h ../src/SLScanWorker.h ../src/SLDecoderWorker.h ../src/SLTrackerWorker.h ../src/SLVideoDialog.h ../src/SLAboutDialog.h ../src/SLPoseWidget.h ../src/SLPointCloudWidget.h ../src/SLTrackerDialog.h ../src/SLTriangulatorWorker.h ../src/SLTraceWidget.h ../src/camera/Camera.h ../src/projector/Projector.h ../src/projector/ProjectorOpenGL.h ../src/projector/OpenGLContext.h ../src/projector/ProjectorLC3000.h ../src/projector/ProjectorLC4500.h ../src/codec/Codec.h ../src/codec/phaseunwrap.h ../src/codec/phasecorr.h ../src/codec/pstools.h ../src/codec/CodecCalibration.h ../src/codec/CodecPhaseShift2x3.h ../src/codec/CodecPhaseShiftDescatter.h ../src/codec/CodecPhaseShift3.h ../src/codec/CodecPhaseShift3FastWrap.h ../src/codec/CodecPhaseShift3Unwrap.h ../src/codec/CodecPhaseShift4.h ../src/codec/CodecGrayCode.h ../src/codec/CodecPhaseShift2p1.h ../src/codec/CodecFastRatio.h ../src/codec/CodecPhaseShiftModulated.h ../src/codec/CodecPhaseShiftMicro.h ../src/codec/CodecPhaseShiftNStep.h ../src/triangulator/Triangulator.h ../src/calibrator/CalibrationData.h ../src/calibrator/Calibrator.h ../src/calibrator/CalibratorLocHom.h ../src/calibrator/CalibratorRBF.h ../src/calibrator/CThinPlateSpline.h ../src/calibrator/RBFInterpolator.h ../src/tracker/Tracker.h ../src/tracker/TrackerICP.h ../src/tracker/TrackerNDT.h ../src/tracker/CorrRejectOrgBoundFast.h ../src/tracker/CorrEstOrgProjFast.h ../src/tracker/CorrEstKdTreeFast.h ../src/tracker/TrackerPCL.h ../src/tracker/PoseFilter.h ../src/cvtools.h ../src/camera/camerhikang.h ../src/projector/LC3000API/lcr_cmd.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/SLStudio.cpp ../src/SLScanWorker.cpp ../src/SLDecoderWorker.cpp ../src/SLTrackerWorker.cpp ../src/SLVideoWidget.cpp ../src/SLPreferenceDialog.cpp ../src/SLCalibrationDialog.cpp ../src/SLCameraVirtual.cpp ../src/SLProjectorVirtual.cpp ../src/SLVideoDialog.cpp ../src/SLAboutDialog.cpp ../src/SLPoseWidget.cpp ../src/SLPointCloudWidget.cpp ../src/SLTrackerDialog.cpp ../src/SLTriangulatorWorker.cpp ../src/SLTraceWidget.cpp ../src/camera/Camera.cpp ../src/projector/ProjectorOpenGL.cpp ../src/codec/phaseunwrap.cpp ../src/codec/phasecorr.cpp ../src/codec/CodecCalibration.cpp ../src/codec/CodecPhaseShift2x3.cpp ../src/codec/CodecPhaseShiftDescatter.cpp ../src/codec/CodecPhaseShift3.cpp ../src/codec/CodecPhaseShift3FastWrap.cpp ../src/codec/CodecPhaseShift3Unwrap.cpp ../src/codec/CodecPhaseShift4.cpp ../src/codec/CodecFastRatio.cpp ../src/codec/CodecPhaseShift2p1.cpp ../src/codec/CodecPhaseShiftModulated.cpp ../src/codec/CodecPhaseShiftMicro.cpp ../src/codec/CodecGrayCode.cpp ../src/codec/pstools.cpp ../src/codec/CodecPhaseShiftNStep.cpp ../src/triangulator/Triangulator.cpp ../src/calibrator/CalibrationData.cpp ../src/calibrator/CalibratorLocHom.cpp ../src/calibrator/CalibratorRBF.cpp ../src/calibrator/CThinPlateSpline.cpp ../src/calibrator/RBFInterpolator.cpp ../src/cvtools.cpp ../src/tracker/TrackerICP.cpp ../src/tracker/TrackerNDT.cpp ../src/tracker/CorrRejectOrgBoundFast.cpp ../src/tracker/TrackerPCL.cpp ../src/tracker/PoseFilter.cpp ../src/camera/camerhikang.cpp ../src/projector/OpenGLContext.Unix.cpp ../src/projector/ProjectorLC3000.cpp ../src/projector/LC3000API/lcr_cmd.cpp ../src/projector/LC3000API/lcr_packetizer.cpp ../src/projector/LC3000API/tcp_client.cpp ../src/projector/ProjectorLC4500.cpp ../src/projector/LC4500API/dlpc350_api.cpp ../src/projector/LC4500API/dlpc350_usb.cpp ../src/projector/LC4500API/hid.Libusb.c $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/SLStudio.h ../src/SLVideoWidget.h ../src/SLPreferenceDialog.h ../src/SLCalibrationDialog.h ../src/SLCameraVirtual.h ../src/SLProjectorVirtual.h ../src/SLScanWorker.h ../src/SLDecoderWorker.h ../src/SLTrackerWorker.h ../src/SLVideoDialog.h ../src/SLAboutDialog.h ../src/SLPoseWidget.h ../src/SLPointCloudWidget.h ../src/SLTrackerDialog.h ../src/SLTriangulatorWorker.h ../src/SLTraceWidget.h ../src/camera/Camera.h ../src/projector/Projector.h ../src/projector/ProjectorOpenGL.h ../src/projector/OpenGLContext.h ../src/projector/ProjectorLC3000.h ../src/projector/ProjectorLC4500.h ../src/codec/Codec.h ../src/codec/phaseunwrap.h ../src/codec/phasecorr.h ../src/codec/pstools.h ../src/codec/CodecCalibration.h ../src/codec/CodecPhaseShift2x3.h ../src/codec/CodecPhaseShiftDescatter.h ../src/codec/CodecPhaseShift3.h ../src/codec/CodecPhaseShift3FastWrap.h ../src/codec/CodecPhaseShift3Unwrap.h ../src/codec/CodecPhaseShift4.h ../src/codec/CodecGrayCode.h ../src/codec/CodecPhaseShift2p1.h ../src/codec/CodecFastRatio.h ../src/codec/CodecPhaseShiftModulated.h ../src/codec/CodecPhaseShiftMicro.h ../src/codec/CodecPhaseShiftNStep.h ../src/triangulator/Triangulator.h ../src/calibrator/CalibrationData.h ../src/calibrator/Calibrator.h ../src/calibrator/CalibratorLocHom.h ../src/calibrator/CalibratorRBF.h ../src/calibrator/CThinPlateSpline.h ../src/calibrator/RBFInterpolator.h ../src/tracker/Tracker.h ../src/tracker/TrackerICP.h ../src/tracker/TrackerNDT.h ../src/tracker/CorrRejectOrgBoundFast.h ../src/tracker/CorrEstOrgProjFast.h ../src/tracker/CorrEstKdTreeFast.h ../src/tracker/TrackerPCL.h ../src/tracker/PoseFilter.h ../src/cvtools.h ../src/camera/camerhikang.h ../src/projector/ProjectorQT.h ../src/projector/ShowImage.h ../src/projector/LC3000API/lcr_cmd.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/SLStudio.cpp ../src/SLScanWorker.cpp ../src/SLDecoderWorker.cpp ../src/SLTrackerWorker.cpp ../src/SLVideoWidget.cpp ../src/SLPreferenceDialog.cpp ../src/SLCalibrationDialog.cpp ../src/SLCameraVirtual.cpp ../src/SLProjectorVirtual.cpp ../src/SLVideoDialog.cpp ../src/SLAboutDialog.cpp ../src/SLPoseWidget.cpp ../src/SLPointCloudWidget.cpp ../src/SLTrackerDialog.cpp ../src/SLTriangulatorWorker.cpp ../src/SLTraceWidget.cpp ../src/camera/Camera.cpp ../src/projector/ProjectorOpenGL.cpp ../src/codec/phaseunwrap.cpp ../src/codec/phasecorr.cpp ../src/codec/CodecCalibration.cpp ../src/codec/CodecPhaseShift2x3.cpp ../src/codec/CodecPhaseShiftDescatter.cpp ../src/codec/CodecPhaseShift3.cpp ../src/codec/CodecPhaseShift3FastWrap.cpp ../src/codec/CodecPhaseShift3Unwrap.cpp ../src/codec/CodecPhaseShift4.cpp ../src/codec/CodecFastRatio.cpp ../src/codec/CodecPhaseShift2p1.cpp ../src/codec/CodecPhaseShiftModulated.cpp ../src/codec/CodecPhaseShiftMicro.cpp ../src/codec/CodecGrayCode.cpp ../src/codec/pstools.cpp ../src/codec/CodecPhaseShiftNStep.cpp ../src/triangulator/Triangulator.cpp ../src/calibrator/CalibrationData.cpp ../src/calibrator/CalibratorLocHom.cpp ../src/calibrator/CalibratorRBF.cpp ../src/calibrator/CThinPlateSpline.cpp ../src/calibrator/RBFInterpolator.cpp ../src/cvtools.cpp ../src/tracker/TrackerICP.cpp ../src/tracker/TrackerNDT.cpp ../src/tracker/CorrRejectOrgBoundFast.cpp ../src/tracker/TrackerPCL.cpp ../src/tracker/PoseFilter.cpp ../src/camera/camerhikang.cpp ../src/projector/ProjectorQT.cpp ../src/projector/ShowImage.cpp ../src/projector/OpenGLContext.Unix.cpp ../src/projector/ProjectorLC3000.cpp ../src/projector/LC3000API/lcr_cmd.cpp ../src/projector/LC3000API/lcr_packetizer.cpp ../src/projector/LC3000API/tcp_client.cpp ../src/projector/ProjectorLC4500.cpp ../src/projector/LC4500API/dlpc350_api.cpp ../src/projector/LC4500API/dlpc350_usb.cpp ../src/projector/LC4500API/hid.Libusb.c $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/SLStudio.ui ../src/SLPreferenceDialog.ui ../src/SLCalibrationDialog.ui ../src/SLVideoDialog.ui ../src/SLAboutDialog.ui ../src/SLTrackerDialog.ui $(DISTDIR)/
 
 
@@ -667,9 +677,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -D_REENTRANT -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_SLStudio.cpp moc_SLVideoWidget.cpp moc_SLPreferenceDialog.cpp moc_SLCalibrationDialog.cpp moc_SLScanWorker.cpp moc_SLDecoderWorker.cpp moc_SLTrackerWorker.cpp moc_SLVideoDialog.cpp moc_SLAboutDialog.cpp moc_SLPoseWidget.cpp moc_SLPointCloudWidget.cpp moc_SLTrackerDialog.cpp moc_SLTriangulatorWorker.cpp moc_SLTraceWidget.cpp moc_Calibrator.cpp moc_CalibratorLocHom.cpp moc_CalibratorRBF.cpp moc_PoseFilter.cpp
+compiler_moc_header_make_all: moc_SLStudio.cpp moc_SLVideoWidget.cpp moc_SLPreferenceDialog.cpp moc_SLCalibrationDialog.cpp moc_SLScanWorker.cpp moc_SLDecoderWorker.cpp moc_SLTrackerWorker.cpp moc_SLVideoDialog.cpp moc_SLAboutDialog.cpp moc_SLPoseWidget.cpp moc_SLPointCloudWidget.cpp moc_SLTrackerDialog.cpp moc_SLTriangulatorWorker.cpp moc_SLTraceWidget.cpp moc_Calibrator.cpp moc_CalibratorLocHom.cpp moc_CalibratorRBF.cpp moc_PoseFilter.cpp moc_ProjectorQT.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_SLStudio.cpp moc_SLVideoWidget.cpp moc_SLPreferenceDialog.cpp moc_SLCalibrationDialog.cpp moc_SLScanWorker.cpp moc_SLDecoderWorker.cpp moc_SLTrackerWorker.cpp moc_SLVideoDialog.cpp moc_SLAboutDialog.cpp moc_SLPoseWidget.cpp moc_SLPointCloudWidget.cpp moc_SLTrackerDialog.cpp moc_SLTriangulatorWorker.cpp moc_SLTraceWidget.cpp moc_Calibrator.cpp moc_CalibratorLocHom.cpp moc_CalibratorRBF.cpp moc_PoseFilter.cpp
+	-$(DEL_FILE) moc_SLStudio.cpp moc_SLVideoWidget.cpp moc_SLPreferenceDialog.cpp moc_SLCalibrationDialog.cpp moc_SLScanWorker.cpp moc_SLDecoderWorker.cpp moc_SLTrackerWorker.cpp moc_SLVideoDialog.cpp moc_SLAboutDialog.cpp moc_SLPoseWidget.cpp moc_SLPointCloudWidget.cpp moc_SLTrackerDialog.cpp moc_SLTriangulatorWorker.cpp moc_SLTraceWidget.cpp moc_Calibrator.cpp moc_CalibratorLocHom.cpp moc_CalibratorRBF.cpp moc_PoseFilter.cpp moc_ProjectorQT.cpp
 moc_SLStudio.cpp: ../src/SLScanWorker.h \
 		../src/camera/Camera.h \
 		../src/projector/Projector.h \
@@ -810,6 +820,13 @@ moc_PoseFilter.cpp: ../src/tracker/PoseFilter.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ecnu/slstudio-master/src -I/home/ecnu/slstudio-master/src/camera -I/home/ecnu/slstudio-master/src/projector -I/home/ecnu/slstudio-master/src/codec -I/home/ecnu/slstudio-master/src/triangulator -I/home/ecnu/slstudio-master/src/calibrator -I/home/ecnu/slstudio-master/src/tracker -I/usr/include/vtk-6.3 -I/usr/include/pcl-1.8 -I/usr/include/eigen3 -I/opt/MVS/include -I/usr/include/opencv -I/usr/include/ni -I/usr/include/openni2 -I/usr/include/eigen3 -I/usr/include/libdrm -I/usr/include/libusb-1.0 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/tracker/PoseFilter.h -o moc_PoseFilter.cpp
+
+moc_ProjectorQT.cpp: ../src/projector/Projector.h \
+		../src/projector/ShowImage.h \
+		../src/projector/ProjectorQT.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ecnu/slstudio-master/src -I/home/ecnu/slstudio-master/src/camera -I/home/ecnu/slstudio-master/src/projector -I/home/ecnu/slstudio-master/src/codec -I/home/ecnu/slstudio-master/src/triangulator -I/home/ecnu/slstudio-master/src/calibrator -I/home/ecnu/slstudio-master/src/tracker -I/usr/include/vtk-6.3 -I/usr/include/pcl-1.8 -I/usr/include/eigen3 -I/opt/MVS/include -I/usr/include/opencv -I/usr/include/ni -I/usr/include/openni2 -I/usr/include/eigen3 -I/usr/include/libdrm -I/usr/include/libusb-1.0 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/projector/ProjectorQT.h -o moc_ProjectorQT.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1000,6 +1017,8 @@ SLCalibrationDialog.o: ../src/SLCalibrationDialog.cpp ../src/SLCalibrationDialog
 		../src/projector/LC3000API/error.h \
 		../src/projector/ProjectorLC4500.h \
 		../src/SLProjectorVirtual.h \
+		../src/projector/ProjectorQT.h \
+		../src/projector/ShowImage.h \
 		../src/calibrator/CalibratorLocHom.h \
 		../src/calibrator/CalibratorRBF.h \
 		../src/cvtools.h
@@ -1226,6 +1245,14 @@ camerhikang.o: ../src/camera/camerhikang.cpp ../src/camera/camerhikang.h \
 		../src/camera/CameraIIDC.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o camerhikang.o ../src/camera/camerhikang.cpp
 
+ProjectorQT.o: ../src/projector/ProjectorQT.cpp ../src/projector/ProjectorQT.h \
+		../src/projector/Projector.h \
+		../src/projector/ShowImage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ProjectorQT.o ../src/projector/ProjectorQT.cpp
+
+ShowImage.o: ../src/projector/ShowImage.cpp ../src/projector/ShowImage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ShowImage.o ../src/projector/ShowImage.cpp
+
 OpenGLContext.Unix.o: ../src/projector/OpenGLContext.Unix.cpp ../src/projector/OpenGLContext.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OpenGLContext.Unix.o ../src/projector/OpenGLContext.Unix.cpp
 
@@ -1328,6 +1355,9 @@ moc_CalibratorRBF.o: moc_CalibratorRBF.cpp
 
 moc_PoseFilter.o: moc_PoseFilter.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_PoseFilter.o moc_PoseFilter.cpp
+
+moc_ProjectorQT.o: moc_ProjectorQT.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ProjectorQT.o moc_ProjectorQT.cpp
 
 ####### Install
 

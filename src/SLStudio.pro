@@ -73,7 +73,9 @@ HEADERS  += SLStudio.h \
         tracker/TrackerPCL.h \
         tracker/PoseFilter.h \
         cvtools.h \
-    camera/camerhikang.h
+    camera/camerhikang.h \
+    projector/ProjectorQT.h \
+    projector/ShowImage.h
 
 
 SOURCES += main.cpp \
@@ -123,7 +125,9 @@ SOURCES += main.cpp \
         tracker/CorrRejectOrgBoundFast.cpp \
         tracker/TrackerPCL.cpp \
         tracker/PoseFilter.cpp \
-    camera/camerhikang.cpp
+    camera/camerhikang.cpp \
+    projector/ProjectorQT.cpp \
+    projector/ShowImage.cpp
 
 INCLUDEPATH += camera/ projector/ codec/ triangulator/ calibrator/ tracker/
 

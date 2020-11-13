@@ -11,6 +11,7 @@
 #include "ProjectorLC3000.h"
 #include "ProjectorLC4500.h"
 #include "SLProjectorVirtual.h"
+#include "ProjectorQT.h"
 
 #include "CalibratorLocHom.h"
 #include "CalibratorRBF.h"
@@ -51,17 +52,18 @@ SLCalibrationDialog::SLCalibrationDialog(SLStudio *parent) : QDialog(parent), ui
 
     // Initialize projector
     int screenNum = settings.value("projector/screenNumber", -1).toInt();
-    projector = new ProjectorOpenGL(0);
+    projector = new ProjectorQT(0);
 //    if(screenNum >= 0)
 //        projector = new ProjectorOpenGL(screenNum);
 //    else if(screenNum == -1)
 //        projector = new SLProjectorVirtual(screenNum);
-//    else if(screenNum == -2)
+//    
+//    if(screenNum == -2)
 //        projector = new ProjectorLC3000(0);
 //    else if(screenNum == -3)
 //        projector = new ProjectorLC4500(0);
 //    else
-//        std::cerr << "SLCalibrationDialog: invalid projector id " << screenNum << std::endl;
+
 
     unsigned int screenResX, screenResY;
     projector->getScreenRes(&screenResX, &screenResY);

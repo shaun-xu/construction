@@ -44,7 +44,6 @@ vector<CameraInfo> CamerHikang::getCameraList(){
 
 CamerHikang::CamerHikang(unsigned int camNum, CameraTriggerMode triggerMode) : Camera(triggerMode) {
     return;
-
     int ret = -1;
     m_pHandle = NULL;
 
@@ -185,14 +184,15 @@ CameraFrame  CamerHikang::getFrame()
     int nRet = MV_CC_EnumDevices(MV_GIGE_DEVICE | MV_USB_DEVICE, &stDeviceList);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_EnumDevices fail! nRet [%x]\n", nRet);
+
+        std::cout<<"MV_CC_EnumDevices fail! nRet [%x]" <<nRet<<std::endl;
     }
 
     if (stDeviceList.nDeviceNum > 0)
     {
         for (int i = 0; i < stDeviceList.nDeviceNum; i++)
         {
-            printf("[device %d]:\n", i);
+            std::cout<<"[device %d]:" <<i<<std::endl;
             MV_CC_DEVICE_INFO* pDeviceInfo = stDeviceList.pDeviceInfo[i];
             if (NULL == pDeviceInfo)
             {
@@ -203,7 +203,7 @@ CameraFrame  CamerHikang::getFrame()
     }
     else
     {
-        printf("Find No Devices!\n");
+        std::cout<<"Find No Devices!"<<std::endl;
         return frame;
     }
 
@@ -213,7 +213,7 @@ CameraFrame  CamerHikang::getFrame()
 
     if (nIndex >= stDeviceList.nDeviceNum)
     {
-        printf("Intput error!\n");
+        std::cout<<"Intput error!"<<std::endl;
         return frame;
     }
 
@@ -222,7 +222,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_CreateHandle(&handle, stDeviceList.pDeviceInfo[nIndex]);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_CreateHandle fail! nRet [%x]\n", nRet);
+        std::cout<<"MV_CC_CreateHandle fail! nRet [%x]"<<nRet<<std::endl;
         return frame;
     }
 
@@ -231,7 +231,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_OpenDevice(handle);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_OpenDevice fail! nRet [%x]\n", nRet);
+       std::cout<<"MV_CC_OpenDevice fail! nRet [%x]"<< nRet<<std::endl;
         return frame;
     }
 
@@ -244,12 +244,12 @@ CameraFrame  CamerHikang::getFrame()
             nRet = MV_CC_SetIntValue(handle,"GevSCPSPacketSize",nPacketSize);
             if(nRet != MV_OK)
             {
-                printf("Warning: Set Packet Size fail nRet [0x%x]!\n", nRet);
+                std::cout<<"Warning: Set Packet Size fail nRet [0x%x]!"<<nRet<<std::endl;
             }
         }
         else
         {
-            printf("Warning: Get Packet Size fail nRet [0x%x]!\n", nPacketSize);
+            std::cout<<"Warning: Get Packet Size fail nRet [0x%x]!"<<nPacketSize<<std::endl;
         }
     }
 
@@ -258,7 +258,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_SetEnumValue(handle, "TriggerMode", 0);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_SetTriggerMode fail! nRet [%x]\n", nRet);
+        std::cout<<"MV_CC_SetTriggerMode fail! nRet [%x]"<<nRet<<std::endl;
         return frame;
     }
 
@@ -267,7 +267,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_StartGrabbing(handle);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_StartGrabbing fail! nRet [%x]\n", nRet);
+        std::cout<<"MV_CC_StartGrabbing fail! nRet [%x]"<<nRet<<std::endl;
         return frame;
     }
 
@@ -277,7 +277,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_GetIntValue(handle, "PayloadSize", &stParam);
     if (MV_OK != nRet)
     {
-        printf("Get PayloadSize fail! nRet [0x%x]\n", nRet);
+        std::cout<<"Get PayloadSize fail! nRet [0x%x]"<< nRet<<std::endl;
         return frame ;
     }
 
@@ -296,8 +296,7 @@ CameraFrame  CamerHikang::getFrame()
         nRet = MV_CC_GetOneFrameTimeout(handle, pData, nDataSize, &stImageInfo, 1000);
         if (nRet == MV_OK)
         {
-            printf("GetOneFrame, Width[%d], Height[%d], nFrameNum[%d]\n",
-                stImageInfo.nWidth, stImageInfo.nHeight, stImageInfo.nFrameNum);
+            std::cout<<"GetOneFrame, Width[%d], Height[%d], nFrameNum[%d]"<<stImageInfo.nWidth<< stImageInfo.nHeight<<stImageInfo.nFrameNum<<std::endl;
 
 
             unsigned char  *pDataForRGB = (unsigned char*)malloc(stImageInfo.nWidth * stImageInfo.nHeight * 4 + 2048);
@@ -323,7 +322,7 @@ CameraFrame  CamerHikang::getFrame()
             nRet = MV_CC_ConvertPixelType(handle, &stConvertParam);
             if (MV_OK != nRet)
             {
-                printf("MV_CC_ConvertPixelType fail! nRet [%x]\n", nRet);
+                std::cout<<"MV_CC_ConvertPixelType fail! nRet [%x]"<<nRet<<std::endl;
                 break;
             }
             int type =CV_8UC3;
@@ -336,11 +335,9 @@ CameraFrame  CamerHikang::getFrame()
             frame.width = stImageInfo.nWidth;
             frame.height = stImageInfo.nHeight;
             frame.sizeBytes = stImageInfo.nWidth * stImageInfo.nHeight *  4 + 2048;
-
-
         }
         else{
-            printf("No data[%x]\n", nRet);
+            std::cout<<"No data[%x]"<< nRet<<std::endl;
         }
     }
 
@@ -350,7 +347,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_StopGrabbing(handle);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_StopGrabbing fail! nRet [%x]\n", nRet);
+       std::cout<<"MV_CC_StopGrabbing fail! nRet [%x]"<< nRet<<std::endl;
         return frame;
     }
 
@@ -359,7 +356,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_CloseDevice(handle);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_CloseDevice fail! nRet [%x]\n", nRet);
+        std::cout<<"MV_CC_CloseDevice fail! nRet [%x]"<< nRet<<std::endl;
         return frame;
     }
 
@@ -368,7 +365,7 @@ CameraFrame  CamerHikang::getFrame()
     nRet = MV_CC_DestroyHandle(handle);
     if (MV_OK != nRet)
     {
-        printf("MV_CC_DestroyHandle fail! nRet [%x]\n", nRet);
+        std::cout<<"MV_CC_DestroyHandle fail! nRet [%x]"<<nRet<<std::endl;
         return frame;
     }
 

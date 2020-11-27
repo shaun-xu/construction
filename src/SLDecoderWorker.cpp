@@ -103,6 +103,17 @@ void SLDecoderWorker::decodeSequence(std::vector<cv::Mat> frameSeq){
 
     decoder->decodeFrames(up, vp, mask, shading);
 
+    //save image
+    for(unsigned int i=0; i<frameSeq.size(); i++){
+        QString filename = QString("decode-work-frameSeq_%1.bmp").arg(i);
+        cv::imwrite(filename.toStdString(), frameSeq[i]);
+    }
+
+    cv::imwrite("decode-work-up.bmp", up);
+    cv::imwrite("decode-work-vp.bmp", vp);
+    cv::imwrite("decode-work-shading.bmp", shading);
+    cv::imwrite("decode-work-mask.bmp", mask);
+
     // Emit result
     emit newUpVp(up, vp, mask, shading);
 

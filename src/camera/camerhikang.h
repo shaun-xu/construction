@@ -31,6 +31,9 @@ private:
     bool  capturing;
 
     cv::Mat currentBuffer;
+    void* handle;
+    MV_FRAME_OUT_INFO_EX stImageInfo;
+    MVCC_INTVALUE stParam;
 
 };
 

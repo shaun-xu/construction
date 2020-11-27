@@ -74,13 +74,13 @@ CalibrationData CalibratorLocHom::calibrate(){
         //cv::GaussianBlur(shading[i], shading[i], cv::Size(5,5), 2, 2);
         // Extract checker corners
         //std::cout << i << " findChessboardCorners" << std::endl;
-        bool success = cv::findChessboardCorners(frames[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
+//        bool success = cv::findChessboardCorners(frames[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
 
-//        bool success = cv::findChessboardCorners(shading[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
+        bool success = cv::findChessboardCorners(shading[i], patternSize, qci, cv::CALIB_CB_ADAPTIVE_THRESH);
         if(!success)
         {
             std::cout << "Calibrator: could not extract chess board corners on frame seqence " << i << std::endl << std::flush;
-           cv::imwrite(QString("chess-frames[%1].png").arg(i).toStdString(), frames[i]);
+           cv::imwrite(QString("chess-frames[%1].png").arg(i).toStdString(), shading[i]);
 
         }
         else{

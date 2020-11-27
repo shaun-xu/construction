@@ -113,11 +113,10 @@ void SLTriangulatorWorker::triangulatePointCloud(cv::Mat up, cv::Mat vp, cv::Mat
 
     std::cout << "Triangulator: " << time.elapsed() << "ms" << std::endl;
 
-    if(writeToDisk){
         QString fileName = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmsszzz");
         fileName.append(".pcd");
         pcl::io::savePCDFileBinary(fileName.toStdString(), *pointCloudPCL);
-    }
+
 
     //emit finished();
 }

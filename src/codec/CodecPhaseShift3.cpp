@@ -69,9 +69,9 @@ void DecoderPhaseShift3::decodeFrames(cv::Mat &up, cv::Mat &vp, cv::Mat &mask, c
 
     up = pstools::getPhase(frames[0], frames[1], frames[2]);
 
-//    cvtools::writeMat(frames[0], "frames[0].mat");
-//    cvtools::writeMat(frames[1], "frames[1].mat");
-//    cvtools::writeMat(frames[2], "frames[2].mat");
+    cvtools::writeMat(frames[0], "DecoderPhaseShift3-frames[0].mat");
+    cvtools::writeMat(frames[1], "DecoderPhaseShift3-frames[1].mat");
+    cvtools::writeMat(frames[2], "DecoderPhaseShift3-frames[2].mat");
 
     up *= screenCols/(2*pi);
 
@@ -99,7 +99,7 @@ void DecoderPhaseShift3::decodeFrames(cv::Mat &up, cv::Mat &vp, cv::Mat &mask, c
     cv::Mat edgesUp = abs(dx) + abs(dy);
 //    cv::magnitude(dx, dy, edgesUp);
 
-//cvtools::writeMat(edges, "edges.mat", "edges");
+    cvtools::writeMat(edgesUp, "edges.mat", "edges");
     mask = mask &  (edgesUp < 80);
 
 }

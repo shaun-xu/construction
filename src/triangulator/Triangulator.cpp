@@ -56,11 +56,11 @@ Triangulator::Triangulator(CalibrationData _calibration) : calibration(_calibrat
     cv::Mat eye = cv::Mat::eye(3, 3, CV_32F);
     cv::initUndistortRectifyMap(calibration.Kc, calibration.kc, eye, calibration.Kc, cv::Size(calibration.frameWidth, calibration.frameHeight),  CV_16SC2, lensMap1, lensMap2);
 
-    //cv::Mat map1, map2;
-    //cv::normalize(lensMap1, map1, 0, 255, cv::NORM_MINMAX, CV_8U);
-    //cv::normalize(lensMap2, map2, 0, 255, cv::NORM_MINMAX, CV_8U);
-    //cv::imwrite("map1.png", map1);
-    //cv::imwrite("map2.png", map2);
+//    cv::Mat map1, map2;
+//    cv::normalize(lensMap1, map1, 0, 255, cv::NORM_MINMAX, CV_8U);
+//    cv::normalize(lensMap2, map2, 0, 255, cv::NORM_MINMAX, CV_8U);
+//    cv::imwrite("map1.png", map1);
+//    cv::imwrite("map2.png", map2);
 
     // Precompute parts of xyzw
     xyzwPrecomputeOffset.resize(4);
@@ -102,6 +102,8 @@ void Triangulator::triangulate(cv::Mat &up, cv::Mat &vp, cv::Mat &mask, cv::Mat 
     // Mask
     pointCloud = cv::Mat(up.size(), CV_32FC3, cv::Scalar(NAN, NAN, NAN));
     xyz.copyTo(pointCloud, mask);
+
+
 
 }
 

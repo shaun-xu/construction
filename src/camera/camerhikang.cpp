@@ -46,6 +46,8 @@ CamerHikang::CamerHikang(unsigned int camNum, CameraTriggerMode triggerMode) : C
     return;
     int ret = -1;
     m_pHandle = NULL;
+    m_nHeight = 2048;
+    m_nWidth =3072;
 
     //枚举子网内指定的传输协议对应的所有设备
      unsigned int nTLayerType = MV_GIGE_DEVICE | MV_USB_DEVICE;
@@ -330,19 +332,11 @@ CameraFrame  CamerHikang::getFrame()
             cv::Mat frameNew;
             cv::cvtColor(frameCV,frameNew, cv::COLOR_BGR2GRAY);
 //            memcpy(pDataForRGB, frameNew.data,stImageInfo.nWidth*stImageInfo.nHeight);
+            cv::resize(frameNew,frameNew,cv::Size(frameNew.cols/3,frameNew.rows/3),0,0,cv::INTER_AREA);
 
             frameNew.convertTo(currentBuffer, CV_8U);
+
             free(pDataForRGB);
-
-         //cv::imwrite("frameCV.png", frameCV);
-
-            // return as CameraFrame struct
-//            CameraFrame frame;
-//            frame.height = currentBuffer.rows;
-//            frame.width = currentBuffer.cols;
-//            frame.memory = currentBuffer.data;
-//            frame.timeStamp = 0;
-//            frame.sizeBytes = currentBuffer.rows*currentBuffer.cols;
 
             frame.height = currentBuffer.rows;
             frame.width = currentBuffer.cols;
@@ -507,12 +501,12 @@ size_t CamerHikang::getFrameSizeBytes(){
 }
 
 size_t CamerHikang::getFrameWidth(){
-    return m_nWidth;
+    return 3072/3;
 }
 
 
 size_t CamerHikang::getFrameHeight(){
-    return m_nHeight;
+    return 2048/3;
 }
 
 
